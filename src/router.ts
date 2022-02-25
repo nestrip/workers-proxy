@@ -1,9 +1,12 @@
-export async function handleRequest(request: Request): Promise<Response> {
-  if (request.url.endsWith("/upload") && request.method == "POST") {
+import { Router } from "itty-router";
 
-    const formData = await request.formData();
+export function setupRouter(router: Router<Request>): void {
+
+  router.post("/upload", async (req: Request) => {
+    const formData = await req.formData();
+
     const file = formData.get("files");
-    const authKey = request.headers.get("Authorization");
+    const authKey = req.headers.get("Authorization");
 
     if (!formData.has("files") || !(file instanceof File)) {
       return new Response(JSON.stringify({ message: "No file provided!" }), {
@@ -23,18 +26,20 @@ export async function handleRequest(request: Request): Promise<Response> {
       headers: {
         Authorization: authKey,
         "User-Agent": "Cloudflare Worker"
-
       }
     });
 
     return new Response(await result.text(), {
       status: result.status
     });
-  }
 
-  return new Response(JSON.stringify({
-    "message": "Not Found!"
-  }), {
-    status: 404
   });
+
+  router.get("*", () => {
+    return new Response(JSON.stringify({
+      "message": "Page not found!"
+    }), {
+      status: 404,
+    })
+  })
 }
