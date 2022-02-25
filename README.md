@@ -13,7 +13,7 @@ If you'd like to host your own version, there are some things you need to do:
 
 1. Install the [wrangler cli](https://developers.cloudflare.com/workers/cli-wrangler/install-update)
 2. Login with cloudflare workers using `wrangler login`, make sure you have enabled workers in your cloudflare account
-3. Set the API_URL secret using `wrangler secret put API_URL` in nest.rip's case it is `https://api.nest.rip`
+3. Set the API_URL secret using `wrangler secret put API_URL` in nest.rip's case it is `https://api.nest.rip/files/upload`
 4. Publish the worker to workers.dev using `wrangler publish -e dev`
 
 ## Open source?
