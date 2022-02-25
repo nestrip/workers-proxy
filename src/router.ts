@@ -1,5 +1,6 @@
 import { Router } from "itty-router";
 
+
 export function setupRouter(router: Router<Request>): void {
 
   router.post("/upload", async (req: Request) => {
@@ -20,7 +21,8 @@ export function setupRouter(router: Router<Request>): void {
       });
     }
 
-    const result = await fetch(`https://api.nest.rip/files/upload`, {
+    // Im using cloudflare worker secrets, which sets a global variable
+    const result = await fetch(API_URL, {
       method: "POST",
       body: formData,
       headers: {
